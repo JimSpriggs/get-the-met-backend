@@ -1,14 +1,14 @@
 package uk.spon;
 
-
 import com.amazonaws.serverless.proxy.internal.LambdaContainerHandler;
 import com.amazonaws.serverless.proxy.internal.testutils.AwsProxyRequestBuilder;
 import com.amazonaws.serverless.proxy.internal.testutils.MockLambdaContext;
 import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
 import com.amazonaws.services.lambda.runtime.Context;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.HttpHeaders;
@@ -19,15 +19,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.junit.Assert.*;
-
-
-public class StreamLambdaHandlerTest {
+public class StreamLambdaHandlerTest implements WithAssertions {
 
     private static StreamLambdaHandler handler;
     private static Context lambdaContext;
 
-    @BeforeClass
+    @BeforeAll
     public static void setUp() {
         handler = new StreamLambdaHandler();
         lambdaContext = new MockLambdaContext();
@@ -43,16 +40,17 @@ public class StreamLambdaHandlerTest {
         handle(requestStream, responseStream);
 
         AwsProxyResponse response = readResponse(responseStream);
-        assertNotNull(response);
-        assertEquals(Response.Status.OK.getStatusCode(), response.getStatusCode());
+        assertThat(response).isNotNull();
+        assertThat(response.getStatusCode()).isEqualTo(Response.Status.OK.getStatusCode());
 
-        assertFalse(response.isBase64Encoded());
+        assertThat(response.isBase64Encoded()).isFalse();
 
-        assertTrue(response.getBody().contains("pong"));
-        assertTrue(response.getBody().contains("Hello, World!"));
+        assertThat(response.getBody())
+                            .contains("pong")
+                            .contains("Hello, World!");
 
-        assertTrue(response.getMultiValueHeaders().containsKey(HttpHeaders.CONTENT_TYPE));
-        assertTrue(response.getMultiValueHeaders().getFirst(HttpHeaders.CONTENT_TYPE).startsWith(MediaType.APPLICATION_JSON));
+        assertThat(response.getMultiValueHeaders()).containsKey(HttpHeaders.CONTENT_TYPE);
+        assertThat(response.getMultiValueHeaders().getFirst(HttpHeaders.CONTENT_TYPE)).startsWith(MediaType.APPLICATION_JSON);
     }
 
     @Test
@@ -65,8 +63,8 @@ public class StreamLambdaHandlerTest {
         handle(requestStream, responseStream);
 
         AwsProxyResponse response = readResponse(responseStream);
-        assertNotNull(response);
-        assertEquals(Response.Status.NOT_FOUND.getStatusCode(), response.getStatusCode());
+        assertThat(response).isNotNull();
+        assertThat(response.getStatusCode()).isEqualTo(Response.Status.NOT_FOUND.getStatusCode());
     }
 
     private void handle(InputStream is, ByteArrayOutputStream os) {
