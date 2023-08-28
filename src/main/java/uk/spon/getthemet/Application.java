@@ -1,16 +1,13 @@
-package uk.spon;
+package uk.spon.getthemet;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
-
-import uk.spon.controller.PingController;
+import org.springframework.context.annotation.ComponentScan;
 
 
-@SpringBootApplication
 // We use direct @Import instead of @ComponentScan to speed up cold starts
-// @ComponentScan(basePackages = "uk.spon.controller")
-@Import({ PingController.class })
+@SpringBootApplication
+//@Import({ PingController.class })
 public class Application {
 
     public static void main(String[] args) {

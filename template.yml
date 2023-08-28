@@ -9,7 +9,7 @@ Resources:
   GetTheMetFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: uk.spon.StreamLambdaHandler::handleRequest
+      Handler: uk.spon.getthemet.StreamLambdaHandler::handleRequest
       Runtime: java11
       CodeUri: .
       MemorySize: 512

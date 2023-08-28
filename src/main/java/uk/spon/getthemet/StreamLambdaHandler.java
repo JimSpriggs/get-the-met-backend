@@ -1,4 +1,4 @@
-package uk.spon;
+package uk.spon.getthemet;
 
 
 import com.amazonaws.serverless.exceptions.ContainerInitializationException;

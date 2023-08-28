@@ -36,7 +36,7 @@ Commands you can use next
 From the project root folder - where the `template.yml` file is located - start the API with the SAM CLI.
 
 ```bash
-$ sam local start-api
+$ DOCKER_HOST=unix:///Users/johnhurst/.docker/run/docker.sock sam local start-api
 
 ...
 Mounting com.amazonaws.serverless.archetypes.StreamLambdaHandler::handleRequest (java11) at http://127.0.0.1:3000/{proxy+} [OPTIONS GET HEAD POST PUT DELETE PATCH]

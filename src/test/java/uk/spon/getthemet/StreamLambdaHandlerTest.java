@@ -1,4 +1,4 @@
-package uk.spon;
+package uk.spon.getthemet;
 
 import com.amazonaws.serverless.proxy.internal.LambdaContainerHandler;
 import com.amazonaws.serverless.proxy.internal.testutils.AwsProxyRequestBuilder;
